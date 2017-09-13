@@ -1,7 +1,7 @@
-let userKey = 'adroi.adm';
-let tokenKey = 'adroi.adm.token';
-let timestampKey = 'adroi.adm.timestamp';
-let lastPathKey = 'adroi.adm.lastPath';
+let userKey = 'adroi.dev';
+let tokenKey = 'adroi.dev.token';
+let timestampKey = 'adroi.dev.timestamp';
+let lastPathKey = 'adroi.dev.lastPath';
 let session = Object.create({
     getUser () {
       var user = localStorage.getItem(userKey);

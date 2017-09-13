@@ -55,7 +55,7 @@
         <div class="dowm-forward">
           <span class="list-title">上传凭证：</span>
           <el-upload
-            :disabled="this.item!=''||this.fileList.length>=1"
+            :disabled="disablebtn"
             class="upload-wrapper"
             accept=".jpg,.png,.jpeg,.gif"
             :action="urls"
@@ -65,6 +65,7 @@
             :on-remove="remove"
             :on-success="success"
             :on-error="error"
+            :before-upload="beforeupload"
             :on-change="change">
             <el-button size="small" type="primary">点击上传</el-button>
             <div class="el-upload__tip" slot="tip">
@@ -163,7 +164,7 @@ export default {
       labelPosition: 'top',
       urls: apiUtil.url('/v1/dev/finances/materials'),
       fileList: [],
-      item: ''
+      disablebtn: false
     };
   },
   mounted () {
@@ -265,9 +266,9 @@ export default {
         this.fileList.push(item);
       }, () => {this.loadings = false;});
   	},
-    config (formName) {	
+    config (formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid && this.fileList !== 1) {
+        if (valid && this.fileList.length === 1) {
           this.creates();
         } else {
           return this.$alert('请正确处理相应选项或上传证件！！！', '提示：', {
@@ -291,7 +292,7 @@ export default {
       params.materialId = this.materialId;
       params.materialName = this.materialName;
       params.financeType = this.financeType;
-      this.$http.put('/v1/dev/finances/user', params).then((res) => {
+      this.$http.put('/v1/adv/finances/user', params).then((res) => {
         this.loadings = false;
         let data = res.body;
         if (data.ret!=1) {
@@ -305,13 +306,15 @@ export default {
       });
     },
     remove (file, fileList) {
-      this.item='';
+      this.disablebtn = false;
       this.fileList = fileList;
     },
-    success (data) {
-      this.item = data.result;
-      if (data.ret!=1) {
-        return this.$alert(data.message, '提示：', {
+    success (response, file, fileList) {
+      this.disablebtn = false;
+      this.fileList = fileList;
+      console.log(this.fileList.length);
+      if (response.ret!=1) {
+        return this.$alert(response.message, '提示：', {
           confirmButtonText: '确定'
         });
       }
@@ -321,12 +324,21 @@ export default {
         confirmButtonText: '确定'
       });
     },
-    change (data) {
+    change (file, fileList) {
       // console.log(data);
+    },
+    beforeupload (file) {
+      this.disablebtn = true;
+      if (this.fileList.length >= 1) {
+        this.$alert('最多上传1张图片', '提示：', {
+          confirmButtonText: '确定'
+        });
+        return false;
+      }
     },
     back () {
       this.$router.push({
-        path:'/dev/finance/index'
+        path:'/adv/finance/index'
       });
     }
   }

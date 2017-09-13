@@ -8,6 +8,7 @@
     <div class="echarts-wrapper">
       <div id="charts" class="chart-cnt"></div>
     </div>
+    <el-tag class="nouse-btn" v-loading.fullscreen.lock="loadings" element-loading-text="拼命加载中"></el-tag>
   </div>
 </template>
 
@@ -178,6 +179,9 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
   .dev-index-wrapper
+    .nouse-btn
+      opacity: 0
+      height: 0
     .data-total-wrapper
       margin-bottom: 15px  
       padding: 10px

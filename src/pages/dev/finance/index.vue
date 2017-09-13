@@ -102,7 +102,7 @@ export default {
         case '2':
           item = '个人账户';
           break; 
-        default:
+        case '1':
           item = '企业账户';
           break;  
       }
@@ -122,7 +122,9 @@ export default {
           });
         }
         let result = data.result;
-        this.tableData.push(result);
+        if (JSON.stringify(result)!=='{}') {
+          this.tableData.push(result);
+        }
       }, () => {this.loadings = false;});
     },
     handleEdit () {

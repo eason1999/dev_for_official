@@ -53,9 +53,9 @@ export default {
 	    }],
 	  },
 	  labelPosition: 'top',  
-      loadings: false,
-      active: this.actives,
-      appId: this.$store.state.appsteps.appId
+    loadings: false,
+    active: this.actives,
+    appId: this.$store.state.appsteps.appId
     };
   },
   mounted () {

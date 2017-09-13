@@ -91,7 +91,7 @@ export default {
       industryCategories1: [],
       industryCategories2: [],
       industryCategory1:'',
-	  industryCategory2:'',
+	    industryCategory2:'',
       platform: '0',
       apptype: '0',
       ruleForm: {
